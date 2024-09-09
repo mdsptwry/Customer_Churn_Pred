@@ -51,7 +51,7 @@ monthly_charge = st.number_input("Average monthly bill:", min_value=0.0, value=0
 col5, col6 = st.columns(2)
 
 with col5:
-    has_overage = st.selectbox("Has any overage fee", options=["Yes", "No"], index=1)
+    has_overage = st.selectbox("Does customer have any overage fee?", options=["Yes", "No"], index=1)
 with col6:
     if has_overage=="Yes":
         overage_fee = st.number_input("Largest overage fee in the Last 12 months: ", min_value=0.0, value=0.0)
