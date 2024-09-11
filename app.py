@@ -30,7 +30,7 @@ with col2:
     data_plan_binary = 1 if data_plan=='Yes' else 0
 
 # customer service calls
-cust_serv_calls = st.slider('Number of calls to customer service per month:', 0, 30)
+cust_serv_calls = st.slider('Number of calls to customer service in the last 30 days:', 0, 30)
 
 # avg number of mins customer spends on calls duirng the day per month
 col3, col4 = st.columns(2)
@@ -82,10 +82,41 @@ probability = model.predict_proba(user_data_scaled)[:, 1]
 if st.button('Predict'):
     st.subheader("Model Predictions")
     col13, col23 = st.columns([2,2])
-    with col13:
-        st.write("Likely to Churn: ", "Yes" if prediction[0]==1 else "No")
+    #with col13:
+    st.write("Likely to Churn: ", "Yes" if prediction[0]==1 else "No")
+        #st.write("Is this customer likely to Churn: ", "Yes" if prediction[0]==1 else "No")
 
-    with col23:    
-        st.write(f"Probability of Churning: {probability[0]*100: .2f}%")
+    #with col23:    
+        #st.write(f"Probability of Churning: {probability[0]*100: .2f}%")
+
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=probability[0] * 100,  # Convert probability to percentage
+        title={'text': "Probability of churning"},
+        number={'suffix':"%"},
+        gauge={
+            'axis': {'range': [0, 100]},  # Change range to 0-100 for percentage
+            'bar': {'color': "black"},
+            'bgcolor': "lightgray",
+            'steps': [
+                {'range': [0, 30], 'color': "green"},
+                {'range': [30, 70], 'color': "yellow"},
+                {'range': [70, 100], 'color': "red"}
+            ],
+            'threshold': {
+                'line': {'color': "black", 'width': 4},
+                'thickness': 0.75,
+                'value': probability[0] * 100
+            }
+        }
+    ))
+
+    # Set size of the gauge plot
+    fig.update_layout(
+        height=300,  # Set height here
+        width=300    # Set width here
+    )
+
+    st.plotly_chart(fig)
 
 
