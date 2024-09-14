@@ -2,7 +2,7 @@ import requests
 import time
 
 def ping_app():
-    web_url = "https://customerchurnpred-app.streamlit.app/"
+    web_url = "https://predict-churn.streamlit.app/"
     while True:
         try:
             response = requests.get(web_url)
