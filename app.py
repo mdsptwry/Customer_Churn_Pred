@@ -38,7 +38,7 @@ with col2:
     data_plan_binary = 1 if data_plan=='Yes' else 0
 
 # CustomerServiceCalls
-cust_serv_calls = st.number_input('Number of calls to customer service in the last 30 days:', 0, 0)
+cust_serv_calls = st.number_input('Number of calls to customer service in the last 30 days:', min_value=0, value=0)
 
 # DayMins
 col3, col4 = st.columns(2)
